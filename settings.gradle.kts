@@ -19,3 +19,6 @@ include(":app")
 include(":notes-domain")
 project(":notes-domain").projectDir = File(rootDir, "domain/notes")
 
+include(":notes-data")
+project(":notes-data").projectDir = File(rootDir, "data/notes")
+
