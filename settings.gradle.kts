@@ -15,4 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "SecureNotes"
 include(":app")
- 
+
+include(":notes-domain")
+project(":notes-domain").projectDir = File(rootDir, "domain/notes")
+
