@@ -1,5 +1,6 @@
 package com.rodrigorods.ui.notes
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,16 +29,24 @@ class EditNoteActivity : AppCompatActivity() {
 
     private fun deleteNote(noteId: Long) {
         viewModel.deleteNote(noteId)
-        onBackPressed()
+        setResult(RESULT_NOTE_DELETED, Intent().apply {
+            putExtra(EXTRA_NOTE_ID, noteId)
+        })
+        finish()
     }
 
     private fun editNote(noteId: Long) {
-        viewModel.editNote(
-            noteId,
-            binding.title.editText?.text.toString(),
-            binding.description.editText?.text.toString()
-        )
-        onBackPressed()
+        val newTitle = binding.title.editText?.text.toString()
+        val newDescription = binding.description.editText?.text.toString()
+
+        viewModel.editNote(noteId, newTitle, newDescription)
+
+        setResult(RESULT_NOTE_UPDATED, Intent().apply {
+            putExtra(EXTRA_NOTE_ID, noteId)
+            putExtra(EXTRA_NOTE_TITLE, newTitle)
+            putExtra(EXTRA_NOTE_DESCRIPTION, newDescription)
+        })
+        finish()
     }
 
     private fun getStringExtra(extraName: String) =
@@ -46,9 +55,12 @@ class EditNoteActivity : AppCompatActivity() {
 
     companion object {
 
-        private const val EXTRA_NOTE_ID = "xA@Dxca!"
-        private const val EXTRA_NOTE_TITLE = "@(*HANSD>K<BJ@"
-        private const val EXTRA_NOTE_DESCRIPTION = "!!@OIUgcbaxxsS"
+        const val RESULT_NOTE_DELETED = 44
+        const val RESULT_NOTE_UPDATED = 77
+
+        const val EXTRA_NOTE_ID = "xA@Dxca!"
+        const val EXTRA_NOTE_TITLE = "@(*HANSD>K<BJ@"
+        const val EXTRA_NOTE_DESCRIPTION = "!!@OIUgcbaxxsS"
 
         fun getIntent(context: Context, note: Note): Intent {
             return Intent(context, EditNoteActivity::class.java).apply {

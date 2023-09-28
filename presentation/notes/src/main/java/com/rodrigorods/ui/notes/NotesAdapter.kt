@@ -17,6 +17,21 @@ class NotesAdapter(
         notifyItemInserted(0)
     }
 
+    fun removeFromList(deletedId: Long?) {
+        val updatedIndex = notesList.indexOfLast { it.id == deletedId }
+        notesList.removeIf { it.id == deletedId }
+        notifyItemRemoved(updatedIndex)
+    }
+
+    fun updateNote(updatedId: Long?, newTitle: String, newDescription: String) {
+        val updatedIndex = notesList.indexOfLast { it.id == updatedId }
+        notesList[updatedIndex] = notesList[updatedIndex].copy(
+            title = newTitle,
+            description = newDescription
+        )
+        notifyItemChanged(updatedIndex)
+    }
+
     override fun getItemCount(): Int = notesList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteListItemViewHolder {
