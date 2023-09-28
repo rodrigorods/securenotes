@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.rodrigorods.securenotes"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.rodrigorods.securenotes"
@@ -38,6 +38,10 @@ android {
 dependencies {
 
     implementation(project(":notes-ui"))
+    implementation(project(":notes-feature-injector"))
+
+    implementation("io.insert-koin:koin-core:3.4.2")
+    implementation("io.insert-koin:koin-android:3.4.2")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

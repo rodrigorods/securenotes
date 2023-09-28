@@ -24,3 +24,6 @@ project(":notes-data").projectDir = File(rootDir, "data/notes")
 
 include(":notes-ui")
 project(":notes-ui").projectDir = File(rootDir, "presentation/notes")
+
+include(":notes-feature-injector")
+project(":notes-feature-injector").projectDir = File(rootDir, "injector/notes")

@@ -1,28 +1,18 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("kotlin-kapt")
 }
 
 android {
-    namespace = "com.rodrigorods.data.notes"
-    compileSdk = 34
+    namespace = "com.rodrigorods.injector.notes"
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true"
-                )
-            }
-        }
-  }
+    }
 
     buildTypes {
         release {
@@ -44,18 +34,19 @@ android {
 
 dependencies {
 
+    implementation(project(":notes-ui"))
     implementation(project(":notes-domain"))
+    implementation(project(":notes-data"))
 
     implementation("androidx.core:core-ktx:1.9.0")
-    // ROOM + KAPT + Kotlin 1.9 BUG - https://issuetracker.google.com/issues/236612358
-    implementation("androidx.room:room-runtime:2.6.0-rc01")
-    annotationProcessor("androidx.room:room-compiler:2.6.0-rc01")
-    kapt("androidx.room:room-compiler:2.6.0-rc01")
-    implementation("androidx.room:room-ktx:2.6.0-rc01")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
 
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("io.insert-koin:koin-core:3.4.2")
+    implementation("io.insert-koin:koin-android:3.4.2")
 
     testImplementation("junit:junit:4.13.2")
+
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
