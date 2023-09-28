@@ -22,3 +22,5 @@ project(":notes-domain").projectDir = File(rootDir, "domain/notes")
 include(":notes-data")
 project(":notes-data").projectDir = File(rootDir, "data/notes")
 
+include(":notes-ui")
+project(":notes-ui").projectDir = File(rootDir, "presentation/notes")
