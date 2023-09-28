@@ -3,6 +3,7 @@
 
     <application>
         <activity android:name="com.rodrigorods.ui.notes.NotesListActivity"/>
+        <activity android:name="com.rodrigorods.ui.notes.EditNoteActivity"/>
 
     </application>
 

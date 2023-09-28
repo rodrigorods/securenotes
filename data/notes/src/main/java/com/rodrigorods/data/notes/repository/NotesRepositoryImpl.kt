@@ -23,11 +23,11 @@ class NotesRepositoryImpl(
         return notesDAO.addNote(NoteEntity(0, "aaa", "bbb", System.currentTimeMillis()))
     }
 
-    override suspend fun deleteNote() {
-        notesDAO.deleteNote(0)
+    override suspend fun deleteNote(noteId : Long) {
+        notesDAO.deleteNote(noteId)
     }
 
-    override suspend fun updateNote() {
-        notesDAO.updateNote(NoteEntity(0, "", "", 0))
+    override suspend fun updateNote(noteId: Long, newTitle: String, newDescription: String) {
+        notesDAO.updateNote(noteId, newTitle, newDescription)
     }
 }

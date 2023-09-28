@@ -39,4 +39,16 @@ class NotesListViewModel(
             )
         }
     }
+
+    fun deleteNote(noteId: Long) {
+        viewModelScope.launch {
+            useCase.deleteNote(noteId)
+        }
+    }
+
+    fun editNote(noteId: Long, newTitle: String, newDescription: String) {
+        viewModelScope.launch {
+            useCase.updateNote(noteId, newTitle, newDescription)
+        }
+    }
 }

@@ -1,7 +1,7 @@
 package com.rodrigorods.ui.notes
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.rodrigorods.domain.notes.model.Note
 import com.rodrigorods.ui.notes.databinding.ActivityNotesListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +25,7 @@ class NotesListActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.uiState.observe(this) {
-            when(it) {
+            when (it) {
                 is UIState.Waiting -> {}
                 is UIState.DisplayingUI -> displayListOfNotes(it.notes)
                 is UIState.AddedNewNote -> updateListWithNewNote(it.newNote)
@@ -35,10 +35,13 @@ class NotesListActivity : AppCompatActivity() {
     }
 
     private fun displayListOfNotes(notes: List<Note>) {
-        binding.notesList.adapter = NotesAdapter(notes as MutableList<Note>)
+        binding.notesList.adapter = NotesAdapter(notes as MutableList<Note>) { clickedNote ->
+            startActivity(EditNoteActivity.getIntent(baseContext, clickedNote))
+        }
     }
 
     private fun updateListWithNewNote(note: Note) {
         (binding.notesList.adapter as NotesAdapter).addNote(note)
+        binding.notesList.scrollToPosition(0)
     }
 }

@@ -15,8 +15,8 @@ interface NotesDAO {
     @Insert
     suspend fun addNote(note: NoteEntity): Long
 
-    @Update
-    suspend fun updateNote(note: NoteEntity)
+    @Query("UPDATE Notes SET description = :description, title= :title WHERE id=:noteId")
+    suspend fun updateNote(noteId: Long, title: String, description: String)
 
     @Query("DELETE FROM Notes WHERE id=:noteId")
     suspend fun deleteNote(noteId: Long)
