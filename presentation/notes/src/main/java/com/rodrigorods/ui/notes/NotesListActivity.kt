@@ -7,7 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.rodrigorods.domain.notes.model.Note
-import com.rodrigorods.ui.notes.biometric.showBiometricPrompt
+import com.rodrigorods.ui.notes.biometric.displayBiometricAuthDialog
 import com.rodrigorods.ui.notes.databinding.ActivityNotesListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -104,7 +104,7 @@ class NotesListActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.P)
     private fun requestBiometricAuthentication() {
-        showBiometricPrompt(this) { isAuthenticated ->
+        displayBiometricAuthDialog(this) { isAuthenticated ->
             viewModel.setUserAuthentication(isAuthenticated)
         }
     }
