@@ -20,7 +20,7 @@ class NotesRepositoryImpl(
     )
 
     override suspend fun createNote(): Long {
-        return notesDAO.addNote(NoteEntity(0, "aaa", "bbb", System.currentTimeMillis()))
+        return notesDAO.addNote(NoteEntity(0, "", "", System.currentTimeMillis()))
     }
 
     override suspend fun deleteNote(noteId : Long) {
