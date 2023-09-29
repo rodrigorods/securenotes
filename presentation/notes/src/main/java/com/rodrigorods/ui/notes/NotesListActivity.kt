@@ -1,6 +1,7 @@
 package com.rodrigorods.ui.notes
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.rodrigorods.domain.notes.model.Note
@@ -27,7 +28,7 @@ class NotesListActivity : AppCompatActivity() {
     private fun observeData() {
         viewModel.uiState.observe(this) {
             when (it) {
-                is UIState.Waiting -> {}
+                is UIState.Waiting -> displayFullScreenProgress()
                 is UIState.DisplayingUI -> displayListOfNotes(it.notes)
                 is UIState.AddedNewNote -> updateListWithNewNote(it.newNote)
                 is UIState.EmptyList -> {}
@@ -35,7 +36,15 @@ class NotesListActivity : AppCompatActivity() {
         }
     }
 
+    private fun displayFullScreenProgress() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.notesList.visibility = View.GONE
+    }
+
     private fun displayListOfNotes(notes: List<Note>) {
+        binding.progressBar.visibility = View.GONE
+        binding.notesList.visibility = View.VISIBLE
+
         binding.notesList.adapter = NotesAdapter(notes as MutableList<Note>) { clickedNote ->
             startForResult.launch(EditNoteActivity.getIntent(this, clickedNote))
         }
