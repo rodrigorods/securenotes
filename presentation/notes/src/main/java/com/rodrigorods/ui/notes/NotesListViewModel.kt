@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 sealed class UIState {
     object Waiting : UIState()
     data class DisplayingUI(val notes: List<Note>) : UIState()
+    data class DisplayingObfuscatedUI(val notes: List<Note>) : UIState()
     data class AddedNewNote(val newNote: Note) : UIState()
     object EmptyList : UIState()
 }
@@ -19,13 +20,21 @@ class NotesListViewModel(
     private val useCase: NoteUseCase
 ): ViewModel() {
 
+    var isUserAuthenticated = false
+        private set
+        get() = field
+
     private val _uiState = MutableLiveData<UIState>(UIState.Waiting)
     val uiState: LiveData<UIState> = _uiState
 
     fun getAllNotes() {
         viewModelScope.launch {
             val notesList = useCase.getAllNotes()
-            _uiState.postValue(UIState.DisplayingUI(notesList))
+            val state =
+                if (isUserAuthenticated) UIState.DisplayingUI(notesList)
+                else UIState.DisplayingObfuscatedUI(notesList)
+
+            _uiState.postValue(state)
         }
     }
 
@@ -50,5 +59,10 @@ class NotesListViewModel(
         viewModelScope.launch {
             useCase.updateNote(noteId, newTitle, newDescription)
         }
+    }
+
+    fun setUserAuthentication(authenticated: Boolean) {
+        isUserAuthenticated = authenticated
+        getAllNotes()
     }
 }

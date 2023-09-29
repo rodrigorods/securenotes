@@ -5,4 +5,9 @@
 
     <string name="edit_title">Title</string>
     <string name="edit_description">Description</string>
+
+    <string name="biometric_dialog_title">Biometric Authentication</string>
+    <string name="biometric_dialog_subtitle">Enter biometric credentials to see your notes</string>
+    <string name="biometric_dialog_description">Input your Fingerprint or FaceID to ensure it\'s you!</string>
+    <string name="biometric_dialog_negative_button">Cancel</string>
 </resources>
