@@ -2,7 +2,6 @@ package com.rodrigorods.ui.notes
 
 import android.content.Context
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -66,14 +65,15 @@ class NotesAdapter(
             binding.noteDescription.text =
                 note.description.ifEmpty(context, R.string.default_description)
 
-            if (obfuscateEntries) {
-                binding.noteTitle.hideData()
-                binding.noteDescription.hideData()
-            }
+            binding.noteTitle.hideData(obfuscateEntries)
+            binding.noteDescription.hideData(obfuscateEntries)
         }
 
-        private fun TextView.hideData() {
-            this.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        private fun TextView.hideData(obfuscateEntries: Boolean) {
+            val inputType =
+                if (obfuscateEntries) InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                else InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+            this.inputType = inputType
         }
     }
 

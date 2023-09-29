@@ -28,4 +28,9 @@ class UtilsKtTest {
             provideNotesDao(database) is NotesDAO
         )
     }
+
+    @Before
+    fun tearDown() {
+        database.close()
+    }
 }

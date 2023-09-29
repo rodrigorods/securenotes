@@ -61,4 +61,9 @@ class NotesRepositoryImplTest {
         Assert.assertEquals(allNotes.size, 2)
         Assert.assertEquals(allNotes[1].title, "newTitle")
     }
+
+    @Before
+    fun tearDown() {
+        database.close()
+    }
 }

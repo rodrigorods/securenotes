@@ -42,9 +42,7 @@ class NotesListViewModel(
         viewModelScope.launch {
             val addedNoteId = useCase.createNote()
             _uiState.postValue(UIState.AddedNewNote(
-                Note(
-                    id = addedNoteId
-                ))
+                Note(id = addedNoteId))
             )
         }
     }
