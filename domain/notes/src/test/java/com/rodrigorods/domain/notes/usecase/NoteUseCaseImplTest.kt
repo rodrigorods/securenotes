@@ -2,14 +2,10 @@ package com.rodrigorods.domain.notes.usecase
 
 import com.rodrigorods.domain.notes.model.Note
 import com.rodrigorods.domain.notes.repository.NoteRepository
-import io.mockk.Runs
-import io.mockk.awaits
 import io.mockk.coEvery
 import io.mockk.coJustRun
 import io.mockk.coVerify
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
