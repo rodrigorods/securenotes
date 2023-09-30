@@ -7,8 +7,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.rodrigorods.domain.notes.model.Note
-import com.rodrigorods.ui.notes.biometric.displayBiometricAuthDialog
+import com.rodrigorods.ui.notes.biometric.BiometricPromptProvider
 import com.rodrigorods.ui.notes.databinding.ActivityNotesListBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -17,6 +18,7 @@ class NotesListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotesListBinding
 
     private val viewModel: NotesListViewModel by viewModel()
+    private val biometric: BiometricPromptProvider by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ class NotesListActivity : AppCompatActivity() {
 
         if (binding.notesList.adapter == null) {
             val notesAdapter = NotesAdapter(
-                notes as MutableList<Note>
+                notes.toMutableList()
             ) { clickedNote ->
                 performIfAuthenticated {
                     startForResult.launch(EditNoteActivity.getIntent(this, clickedNote))
@@ -104,7 +106,7 @@ class NotesListActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.P)
     private fun requestBiometricAuthentication() {
-        displayBiometricAuthDialog(this) { isAuthenticated ->
+        biometric.displayBiometricAuthDialog(this) { isAuthenticated ->
             viewModel.setUserAuthentication(isAuthenticated)
         }
     }

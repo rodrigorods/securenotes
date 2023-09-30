@@ -11,9 +11,12 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import com.rodrigorods.data.notes.db.provideDatabase
 import com.rodrigorods.data.notes.db.provideNotesDao
+import com.rodrigorods.ui.notes.biometric.BiometricPromptProvider
+import com.rodrigorods.ui.notes.biometric.BiometricPromptProviderImpl
 
 val uiModule = module {
     viewModelOf(::NotesListViewModel)
+    factoryOf(::BiometricPromptProviderImpl) { bind<BiometricPromptProvider>() }
 }
 
 val domainModule = module {

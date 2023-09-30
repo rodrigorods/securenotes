@@ -33,6 +33,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packaging {
+        resources.excludes.add("META-INF/*")
+        resources.excludes.add("META-INF/LICENSE.*")
+    }
 }
 
 dependencies {
@@ -46,6 +50,9 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
 
+//    1.13.7 issue with instrumentation - https://github.com/mockk/mockk/issues/1035
+    androidTestImplementation("io.mockk:mockk-android:1.13.3")
+    androidTestImplementation("androidx.test:core-ktx:1.5.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
