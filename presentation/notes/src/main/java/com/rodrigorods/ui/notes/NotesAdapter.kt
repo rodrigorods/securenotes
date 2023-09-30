@@ -1,13 +1,10 @@
 package com.rodrigorods.ui.notes
 
-import android.content.Context
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rodrigorods.domain.notes.model.Note
-import com.rodrigorods.ui.notes.databinding.NoteListItemBinding
+import com.rodrigorods.ui.notes.databinding.ListEntryBinding
 
 class NotesAdapter(
     private val notesList: MutableList<Note>,
@@ -43,11 +40,11 @@ class NotesAdapter(
     override fun getItemCount(): Int = notesList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteListItemViewHolder {
-        val binding = NoteListItemBinding.inflate(
+        val binding = ListEntryBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
-        return NoteListItemViewHolder(parent.context, binding)
+        return NoteListItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteListItemViewHolder, position: Int) {
@@ -55,29 +52,13 @@ class NotesAdapter(
     }
 
     inner class NoteListItemViewHolder(
-        private val context: Context,
-        private val binding: NoteListItemBinding
+        private val binding: ListEntryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
             binding.root.setOnClickListener { onNoteClicked.invoke(note) }
-
-            binding.noteTitle.text = note.title.ifEmpty(context, R.string.default_title)
-            binding.noteDescription.text =
-                note.description.ifEmpty(context, R.string.default_description)
-
-            binding.noteTitle.hideData(obfuscateEntries)
-            binding.noteDescription.hideData(obfuscateEntries)
+            binding.root.setContent(note)
+            binding.root.obfuscateContent(obfuscateEntries)
         }
 
-        private fun TextView.hideData(obfuscateEntries: Boolean) {
-            val inputType =
-                if (obfuscateEntries) InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                else InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-            this.inputType = inputType
-        }
-    }
-
-    private fun String.ifEmpty(context: Context, resId: Int): String {
-        return this.ifEmpty { context.getString(resId) }
     }
 }
