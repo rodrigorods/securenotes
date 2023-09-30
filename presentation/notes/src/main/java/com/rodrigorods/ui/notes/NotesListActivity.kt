@@ -12,7 +12,6 @@ import com.rodrigorods.ui.notes.databinding.ActivityNotesListBinding
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@RequiresApi(Build.VERSION_CODES.P)
 class NotesListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNotesListBinding
@@ -104,7 +103,6 @@ class NotesListActivity : AppCompatActivity() {
         else requestBiometricAuthentication()
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
     private fun requestBiometricAuthentication() {
         biometric.displayBiometricAuthDialog(this) { isAuthenticated ->
             viewModel.setUserAuthentication(isAuthenticated)
